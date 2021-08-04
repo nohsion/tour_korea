@@ -18,10 +18,10 @@ class App extends React.Component {
         console.log(locations)
 
         // locations[0]: 서울
-        const {data: {response: {body: { items }}}} = await axios.get(
+        const {data: {response: {body: {items}}}} = await axios.get(
             `http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword?ServiceKey=${process.env.REACT_APP_API_KEY}&keyword=${locations[0]}&arrange=P&MobileOS=ETC&MobileApp=AppTest&_type=json`)
         console.log(items.item)
-        this.setState( {contents: items.item})
+        this.setState({contents: items.item})
     }
 
     componentDidMount() {
@@ -30,11 +30,12 @@ class App extends React.Component {
 
 
     render() {
-        const { contents } = this.state
+        const {contents} = this.state
         return (
             <>
-                <div>{contents.map(content => {
-                    return <Content
+                <div>{contents.map(content => (
+                    <Content
+                        key={content.contentid}
                         tel={content.tel}
                         firstimage={content.firstimage}
                         mapx={content.mapx}
@@ -44,7 +45,7 @@ class App extends React.Component {
                         addr1={content.addr1}
                         mapy={content.mapy}
                     />
-                })}</div>
+                ))}</div>
             </>
         )
     }

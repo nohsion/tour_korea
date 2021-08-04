@@ -14,7 +14,7 @@ Content.propTypes = {
     contentid: PropTypes.number.isRequired,
     contenttypeid: PropTypes.number.isRequired,
     firstimage: PropTypes.string.isRequired,
-    tel: PropTypes.string.isRequired,
+    tel: PropTypes.string,
     mapx: PropTypes.number.isRequired,
     mapy: PropTypes.number.isRequired
 }
