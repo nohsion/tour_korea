@@ -9,7 +9,8 @@ class App extends React.Component {
     }
 
     getLocation = async () => {
-        let url = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
+        /* 지역 코드 조회 */
+        let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
         let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /*Service Key*/
         queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('17') /**/
         queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1') /**/
@@ -17,16 +18,25 @@ class App extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest') /**/
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items: {item}}}}} = await axios.get(url + queryParams)
+        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
         let locations = []
         for (let i = 0; i < item.length; i++) {
             locations.push(item[i].name)
         }
         console.log(locations)
 
+        /* 키워드 조회 */
+        let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword'
+        let queryParams2 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /*Service Key*/
+        queryParams2 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams2 += '&' + encodeURIComponent('keyword') + '=' + locations[0]
+        queryParams2 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P')
+        queryParams2 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC') /**/
+        queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest') /**/
+        queryParams2 += '&_type=json'
+
         // locations[0]: 서울, numOfRows: 15개,
-        const {data: {response: {body: {items}}}} = await axios.get(
-            `http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword?ServiceKey=${process.env.REACT_APP_API_KEY}&numOfRows=15&keyword=${locations[0]}&arrange=P&MobileOS=ETC&MobileApp=AppTest&_type=json`)
+        const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams2)
         console.log(items.item)
         this.setState({contents: items.item})
     }
