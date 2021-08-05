@@ -5,39 +5,36 @@ import "./App.css"
 
 class App extends React.Component {
     state = {
+        locations: [],
         contents: []
     }
 
     getLocation = async () => {
         /* 지역 코드 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
-        let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /*Service Key*/
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('17') /**/
-        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1') /**/
-        queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC') /**/
-        queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest') /**/
+        let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('17')
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1')
+        queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
+        queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
         const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
-        let locations = []
-        for (let i = 0; i < item.length; i++) {
-            locations.push(item[i].name)
-        }
-        console.log(locations)
+        this.setState({locations: item})
 
         /* 키워드 조회 */
         let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword'
-        let queryParams2 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /*Service Key*/
+        let queryParams2 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
         queryParams2 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
-        queryParams2 += '&' + encodeURIComponent('keyword') + '=' + locations[0]
-        queryParams2 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P')
-        queryParams2 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC') /**/
-        queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest') /**/
+        queryParams2 += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent('서울')
+        queryParams2 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
+        queryParams2 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
+        queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
+        queryParams2 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12') /* 관광타입: 관광지 */
         queryParams2 += '&_type=json'
 
-        // locations[0]: 서울, numOfRows: 15개,
+
         const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams2)
-        console.log(items.item)
         this.setState({contents: items.item})
     }
 
@@ -45,9 +42,10 @@ class App extends React.Component {
         this.getLocation()
     }
 
-
     render() {
-        const {contents} = this.state
+        const {locations, contents} = this.state
+        console.log(locations)
+        console.log(contents)
         return (
             <section className="container">
                 <div>

@@ -7,7 +7,7 @@ function Content({ title, addr1, addr2, contentid, contenttypeid, firstimage, fi
     return (
         <div className="content">
             <div className="content__image">
-                <img src={firstimage2} alt={title} title={title}/>
+                <img src={firstimage} alt={title} title={title}/>
             </div>
             <div className="content__data">
                 <h4 className="content__title">{title}</h4>
