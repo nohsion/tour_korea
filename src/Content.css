@@ -1,0 +1,15 @@
+.content {
+    display: grid;
+}
+
+.content__image {
+  max-width: 120px;
+}
+
+.content__data {
+    font-weight: 300;
+}
+
+.content__addr {
+    color: rgb(162, 162, 162);
+}
