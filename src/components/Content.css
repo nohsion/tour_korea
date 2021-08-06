@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.content {
+    display: inline-block;
+    width: 30%;
+    padding: 8px;
+}
+
+.content__image {
+    font-size: 0;
+}
+
+.content__image img {
+    width: 100%;
+    height: 254px;
+    object-fit: cover;
+}
+
+.content__data {
+    background-color: white;
+    padding: 10px;
+}
+
+.content__title {
+    color: black;
+}
+
+.content__addr {
+    color: rgb(162, 162, 162);
+    font-weight: 500;
+}
