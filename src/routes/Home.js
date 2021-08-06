@@ -43,9 +43,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {locations, contents} = this.state
-        console.log(locations)
-        console.log(contents)
+        const {contents} = this.state
         return (
             <section className="container">
                 <div>

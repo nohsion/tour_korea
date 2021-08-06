@@ -3,20 +3,12 @@ import PropTypes from "prop-types"
 import {Link} from "react-router-dom";
 import "./Content.css"
 
-const contentType = {
-    12: "travel",
-    15: "festival",
-    28: "activity",
-    32: "hotel",
-    38: "shopping",
-    39: "food"
-}
 
 function Content({title, addr1, addr2, contentid, contenttypeid, firstimage, firstimage2, tel, mapx, mapy}) {
     return (
         <Link
             to={{
-                pathname: `/${contentType[contenttypeid.toString()]}/${contentid}`,
+                pathname: `/travel/${contentid}`,
                 state: {
                     title, addr1, addr2, contentid, contenttypeid, firstimage, firstimage2, tel, mapx, mapy
                 }

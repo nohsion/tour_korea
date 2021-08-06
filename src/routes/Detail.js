@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import DetailContent from "../components/DetailContent";
 
 class Detail extends React.Component {
     state = {
@@ -16,6 +17,9 @@ class Detail extends React.Component {
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon' /*URL*/
         let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
         queryParams += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(contentid)
+        queryParams += '&' + encodeURIComponent('defaultYN') + '=' + encodeURIComponent('Y')
+        queryParams += '&' + encodeURIComponent('overviewYN') + '=' + encodeURIComponent('Y')
+        queryParams += '&' + encodeURIComponent('firstImageYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
@@ -34,8 +38,24 @@ class Detail extends React.Component {
     }
 
     render() {
+        const {infos} = this.state
+        console.log(infos)
         return (
-            <span>hello</span>
+            <section className="container">
+                <div>
+                    <DetailContent
+                        key={infos.contentid}
+                        booktour={infos.booktour}
+                        contentid={infos.contentid}
+                        contenttypeid={infos.contenttypeid}
+                        firstimage={infos.firstimage}
+                        firstimage2={infos.firstimage2}
+                        homepage={infos.homepage}
+                        overview={infos.overview}
+                        title={infos.title}
+                    />
+                </div>
+            </section>
         )
     }
 }
