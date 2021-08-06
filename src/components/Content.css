@@ -22,7 +22,7 @@
 
 .content__data {
     background-color: white;
-    padding: 10px;
+    padding: 15px;
 }
 
 .content__title {
@@ -32,4 +32,14 @@
 .content__addr {
     color: rgb(162, 162, 162);
     font-weight: 500;
+    padding-top: 7px;
 }
+
+@media screen and (max-width: 768px) {
+    .content {
+        width: 90%;
+        padding: 8px;
+    }
+
+}
+
