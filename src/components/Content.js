@@ -36,8 +36,8 @@ Content.propTypes = {
     firstimage: PropTypes.string.isRequired,
     firstimage2: PropTypes.string.isRequired,
     tel: PropTypes.string,
-    mapx: PropTypes.number.isRequired,
-    mapy: PropTypes.number.isRequired
+    mapx: PropTypes.any.isRequired,
+    mapy: PropTypes.any.isRequired
 }
 
 export default Content

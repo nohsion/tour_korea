@@ -9,7 +9,7 @@ class Detail extends React.Component {
     }
 
     getInfos = async () => {
-        const {location: {state: {contentid}}} = this.props
+        const { location: { state: { contentid } } } = this.props
 
         /* 공통 정보 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon' /*URL*/
@@ -23,22 +23,22 @@ class Detail extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
-        this.setState({infos: item})
+        const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
+        this.setState({ infos: item })
     }
 
     componentDidMount() {
-        const {location, history} = this.props
+        const { location } = this.props
         if (location.state === undefined) {
-            history.push("/")
+            window.location.replace("/")
         }
 
         this.getInfos()
     }
-
+    
     render() {
-        const {infos} = this.state
-        console.log(infos)
+        const { infos } = this.state
+        // console.log(infos)
         return (
             <section className="container">
                 <div>
@@ -58,6 +58,7 @@ class Detail extends React.Component {
                     <Map
                         mapx={infos.mapx}
                         mapy={infos.mapy}
+                        title={infos.title}
                     />
                 </div>
             </section>
