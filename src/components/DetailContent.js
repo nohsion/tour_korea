@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types"
+import { Carousel } from 'antd';
 
 
-function DetailContent({key, booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title}) {
+
+function DetailContent({ key, booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
     console.log(homepage)
     return (
         <div className="detail_content">
             <div className="detail_content">
-                <img src={firstimage} alt={title} title={title}/>
+                <img src={firstimage} alt={title} title={title} />
             </div>
             <div className="detail_content__data">
                 <h3 className="detail_content__title">{title}</h3>

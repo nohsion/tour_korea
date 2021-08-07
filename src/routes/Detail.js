@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import DetailContent from "../components/DetailContent";
+import Map from "../components/Map";
 
 class Detail extends React.Component {
     state = {
@@ -9,10 +10,7 @@ class Detail extends React.Component {
 
     getInfos = async () => {
         const {location: {state: {contentid}}} = this.props
-        // if (contentid === undefined) {
-        //
-        // }
-        console.log(contentid)
+
         /* 공통 정보 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon' /*URL*/
         let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
@@ -20,6 +18,7 @@ class Detail extends React.Component {
         queryParams += '&' + encodeURIComponent('defaultYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('overviewYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('firstImageYN') + '=' + encodeURIComponent('Y')
+        queryParams += '&' + encodeURIComponent('mapinfoYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
@@ -53,6 +52,12 @@ class Detail extends React.Component {
                         homepage={infos.homepage}
                         overview={infos.overview}
                         title={infos.title}
+                    />
+                </div>
+                <div>
+                    <Map
+                        mapx={infos.mapx}
+                        mapy={infos.mapy}
                     />
                 </div>
             </section>
