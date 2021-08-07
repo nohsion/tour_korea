@@ -2,6 +2,13 @@ import React from 'react';
 import axios from "axios";
 import Content from "../components/Content";
 import "./Home.css"
+import { Input, Space } from 'antd';
+
+
+const { Search } = Input;
+const onSearch = value => {
+    console.log(value);
+}
 
 class Home extends React.Component {
     state = {
@@ -20,8 +27,8 @@ class Home extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
-        this.setState({locations: item})
+        const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
+        this.setState({ locations: item })
 
 
         /* 지역 기반 조회 (관광지)*/
@@ -34,8 +41,8 @@ class Home extends React.Component {
         queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams2 += '&_type=json'
 
-        const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams2)
-        this.setState({contents: items.item})
+        const { data: { response: { body: { items } } } } = await axios.get(url_searchKeyword + queryParams2)
+        this.setState({ contents: items.item })
 
 
         /* 지역 기반 조회 (식당)*/
@@ -48,8 +55,8 @@ class Home extends React.Component {
         queryParams3 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams3 += '&_type=json'
 
-        const {data: {response: {body}}} = await axios.get(url_searchFood + queryParams3)
-        this.setState({foods: body.items.item})
+        const { data: { response: { body } } } = await axios.get(url_searchFood + queryParams3)
+        this.setState({ foods: body.items.item })
     }
 
     componentDidMount() {
@@ -57,10 +64,13 @@ class Home extends React.Component {
     }
 
     render() {
-        const {contents, foods} = this.state
+        const { contents, foods } = this.state
         return (
             <section className="container">
-                <div>
+                <Space direction="vertical">
+                    <Search placeholder="Input Search Keyword" onSearch={onSearch} enterButton />
+                </Space>
+                <div className="tourspot">
                     <h2>관광지</h2>
                     {contents.map(content => (
                         <Content
@@ -76,6 +86,8 @@ class Home extends React.Component {
                             mapy={content.mapy}
                         />
                     ))}
+                </div>
+                <div className="food">
                     <h2>식당</h2>
                     {foods.map(content => (
                         <Content
