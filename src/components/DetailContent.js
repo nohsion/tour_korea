@@ -1,16 +1,19 @@
 import React from "react";
+import "./DetailContent.css"
 // import PropTypes from "prop-types"
 
 
 function DetailContent({ booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
-    console.log(homepage)
     return (
         <div className="detail_content">
-            <div className="detail_content">
-                <img src={firstimage} alt={title} title={title} />
+            <div className="detail_content__header">
+                <div className="detail_content__image">
+                    <img src={firstimage} alt={title} title={title} />
+                </div>
+                <h3 className="detail_content__title">{title}</h3>
             </div>
             <div className="detail_content__data">
-                <h3 className="detail_content__title">{title}</h3>
+                
                 <p className="detail_content__overview">{overview}</p>
                 <h5 className="detail_content__addr">{homepage}</h5>
             </div>
