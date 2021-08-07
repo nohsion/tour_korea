@@ -1,10 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types"
-import { Carousel } from 'antd';
+// import PropTypes from "prop-types"
 
 
-
-function DetailContent({ key, booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
+function DetailContent({ booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
     console.log(homepage)
     return (
         <div className="detail_content">
@@ -21,16 +19,15 @@ function DetailContent({ key, booktour, contentid, contenttypeid, firstimage, fi
 }
 
 
-DetailContent.propTypes = {
-    key: PropTypes.number.isRequired,
-    booktour: PropTypes.string.isRequired,
-    contentid: PropTypes.number.isRequired,
-    contenttypeid: PropTypes.number.isRequired,
-    firstimage: PropTypes.string.isRequired,
-    firstimage2: PropTypes.string.isRequired,
-    homepage: PropTypes.string.isRequired,
-    overview: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired
-}
+// DetailContent.propTypes = {
+//     booktour: PropTypes.number.isRequired,
+//     contentid: PropTypes.number.isRequired,
+//     contenttypeid: PropTypes.number.isRequired,
+//     firstimage: PropTypes.string.isRequired,
+//     firstimage2: PropTypes.string.isRequired,
+//     homepage: PropTypes.string.isRequired,
+//     overview: PropTypes.string.isRequired,
+//     title: PropTypes.string.isRequired
+// }
 
 export default DetailContent

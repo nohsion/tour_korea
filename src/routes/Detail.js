@@ -28,9 +28,9 @@ class Detail extends React.Component {
     }
 
     componentDidMount() {
-        const {location, history} = this.props
+        const {location} = this.props
         if (location.state === undefined) {
-            history.push("/")
+            window.location.replace("/")
         }
 
         this.getInfos()
@@ -38,7 +38,7 @@ class Detail extends React.Component {
 
     render() {
         const {infos} = this.state
-        console.log(infos)
+        // console.log(infos)
         return (
             <section className="container">
                 <div>
@@ -58,6 +58,7 @@ class Detail extends React.Component {
                     <Map
                         mapx={infos.mapx}
                         mapy={infos.mapy}
+                        title={infos.title}
                     />
                 </div>
             </section>

@@ -1,27 +1,39 @@
 import React, { useRef, useEffect } from "react";
 import "./Map.css"
 
+const { kakao } = window
 
-function Map({ mapx, mapy }) {
-    if ((typeof mapx) === String) {
-        mapx = Number(mapx)
-    }
-    if ((typeof mapy) === String) {
-        mapx = Number(mapy)
-    }
-    // mapx = 33.476947
-    // mapy = 126.822903
-    const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
+function Map({ mapx, mapy, title }) {
+
+    mapx = parseFloat(mapx)
+    mapy = parseFloat(mapy)
+    console.log(mapy, mapx, title)
+
+    const container = useRef(null);
     const options = {
-        //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(mapx, mapy), //지도의 중심좌표.
-        level: 3, //지도의 레벨(확대, 축소 정도)
+        center: new window.kakao.maps.LatLng(mapy, mapx),
+        level: 4,
     };
 
     useEffect(() => {
-        new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
+        var map = new kakao.maps.Map(container.current, options);
+        var markerPosition = new kakao.maps.LatLng(mapy, mapx);
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+
+        var iwContent = '<span class="info-title">' + title + '</span>'
+        var iwPosition = new kakao.maps.LatLng(mapy, mapx); 
+        
+        new kakao.maps.CustomOverlay({
+            map: map,
+            position: iwPosition,
+            content: iwContent,
+            yAnchor: 2.7 
+        });
         return () => { };
-    }, []);
+    }, [mapx, mapy]);
 
     return (
         <div
