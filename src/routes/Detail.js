@@ -41,7 +41,17 @@ class Detail extends React.Component {
         queryParams1 += '&_type=json'
 
         const { data: { response: { body: { items } } } } = await axios.get(url_detailImage + queryParams1)
-        this.setState({ images: items.item })
+        if (items === "") {
+            console.log("api가 제공하는 이미지가 없습니다")
+            this.setState({ images: [
+                    {id: 1},
+                    {id: 2}
+                ]})
+        }
+        else {
+            this.setState({ images: items.item })
+        }
+
     }
 
     componentDidMount() {
@@ -52,7 +62,7 @@ class Detail extends React.Component {
 
         this.getInfos()
     }
-    
+
     render() {
         const { infos, images } = this.state
         console.log(images)
