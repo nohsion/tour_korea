@@ -32,3 +32,7 @@ h3.detail_content__title {
 .detail_content__title {
     color: black;
 }
+
+.detail_content__overview {
+    font-weight: 350;
+}

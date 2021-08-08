@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 import DetailContent from "../components/DetailContent";
 import Map from "../components/Map";
+import ShowImages from "../components/ShowImages";
+import Content from "../components/Content";
 
 class Detail extends React.Component {
     state = {
-        infos: []
+        infos: [], // 공통 정보
+        images: [] // 이미지 정보
     }
 
     getInfos = async () => {
@@ -25,6 +28,20 @@ class Detail extends React.Component {
 
         const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
         this.setState({ infos: item })
+
+
+        /* 이미지 정보 조회 */
+        let url_detailImage = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage' /*URL*/
+        let queryParams1 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
+        queryParams1 += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(contentid)
+        queryParams1 += '&' + encodeURIComponent('imageYN') + '=' + encodeURIComponent('Y')
+        queryParams1 += '&' + encodeURIComponent('subImageYN') + '=' + encodeURIComponent('Y')
+        queryParams1 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
+        queryParams1 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
+        queryParams1 += '&_type=json'
+
+        const { data: { response: { body: { items } } } } = await axios.get(url_detailImage + queryParams1)
+        this.setState({ images: items.item })
     }
 
     componentDidMount() {
@@ -37,8 +54,8 @@ class Detail extends React.Component {
     }
     
     render() {
-        const { infos } = this.state
-        // console.log(infos)
+        const { infos, images } = this.state
+        console.log(images)
         return (
             <section className="container">
                 <div>
@@ -53,6 +70,15 @@ class Detail extends React.Component {
                         overview={infos.overview}
                         title={infos.title}
                     />
+                </div>
+                <div className="showImages">
+                    {images.map(content => (
+                        <ShowImages
+                            originimgurl={content.originimgurl}
+                            serialnum={content.serialnum}
+                            smallimageurl={content.smallimageurl}
+                        />
+                    ))}
                 </div>
                 <div>
                     <Map

@@ -13,9 +13,12 @@ function DetailContent({ booktour, contentid, contenttypeid, firstimage, firstim
                 <h3 className="detail_content__title">{title}</h3>
             </div>
             <div className="detail_content__data">
-                
-                <p className="detail_content__overview">{overview}</p>
-                <h5 className="detail_content__addr">{homepage}</h5>
+                <div className="detail_content__overview" dangerouslySetInnerHTML=
+                    { {__html: overview} }>
+                </div>
+                <div className="detail_content__addr" dangerouslySetInnerHTML=
+                    { {__html: homepage} }>
+                </div>
             </div>
         </div>
     )
