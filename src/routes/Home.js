@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from "axios";
 import Content from "../components/Content";
-import "./Home.css"
 import { Input, Space } from 'antd';
-
+import "./Home.css"
 
 const { Search } = Input;
 const onSearch = value => {

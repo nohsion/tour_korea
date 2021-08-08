@@ -3,7 +3,7 @@ import axios from "axios";
 import DetailContent from "../components/DetailContent";
 import Map from "../components/Map";
 import ShowImages from "../components/ShowImages";
-import Content from "../components/Content";
+
 
 class Detail extends React.Component {
     state = {
@@ -12,7 +12,7 @@ class Detail extends React.Component {
     }
 
     getInfos = async () => {
-        const { location: { state: { contentid } } } = this.props
+        const {location: {state: {contentid}}} = this.props
 
         /* 공통 정보 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon' /*URL*/
@@ -26,8 +26,8 @@ class Detail extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
-        this.setState({ infos: item })
+        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
+        this.setState({infos: item})
 
 
         /* 이미지 정보 조회 */
@@ -40,22 +40,23 @@ class Detail extends React.Component {
         queryParams1 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams1 += '&_type=json'
 
-        const { data: { response: { body: { items } } } } = await axios.get(url_detailImage + queryParams1)
+        const {data: {response: {body: {items}}}} = await axios.get(url_detailImage + queryParams1)
         if (items === "") {
             console.log("api가 제공하는 이미지가 없습니다")
-            this.setState({ images: [
+            this.setState({
+                images: [
                     {id: 1},
                     {id: 2}
-                ]})
-        }
-        else {
-            this.setState({ images: items.item })
+                ]
+            })
+        } else {
+            this.setState({images: items.item})
         }
 
     }
 
     componentDidMount() {
-        const { location } = this.props
+        const {location} = this.props
         if (location.state === undefined) {
             window.location.replace("/")
         }
@@ -64,7 +65,7 @@ class Detail extends React.Component {
     }
 
     render() {
-        const { infos, images } = this.state
+        const {infos, images} = this.state
         console.log(images)
         return (
             <section className="container">

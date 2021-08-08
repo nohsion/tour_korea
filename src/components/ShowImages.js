@@ -3,11 +3,10 @@ import React from "react";
 
 function ShowImages({originimgurl, serialnum, smallimageurl}) {
     return (
-        <div>
-            <div className="image_container">
-                <img src={originimgurl}/>
-            </div>
-        </div>
+        <img
+            className="d-block w-100"
+            src={originimgurl}
+        />
     )
 }
 
