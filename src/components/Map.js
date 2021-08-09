@@ -16,15 +16,15 @@ function Map({mapx, mapy, title, addr}) {
     };
 
     useEffect(() => {
-        var map = new kakao.maps.Map(container.current, options);
-        var markerPosition = new kakao.maps.LatLng(mapy, mapx);
-        var marker = new kakao.maps.Marker({
+        let map = new kakao.maps.Map(container.current, options);
+        let markerPosition = new kakao.maps.LatLng(mapy, mapx);
+        let marker = new kakao.maps.Marker({
             position: markerPosition
         });
         marker.setMap(map);
 
-        var iwContent = '<span class="info-title">' + title + '</span>'
-        var iwPosition = new kakao.maps.LatLng(mapy, mapx);
+        let iwContent = '<span class="info-title">' + title + '</span>'
+        let iwPosition = new kakao.maps.LatLng(mapy, mapx);
 
         new kakao.maps.CustomOverlay({
             map: map,
@@ -34,7 +34,7 @@ function Map({mapx, mapy, title, addr}) {
         });
         return () => {
         };
-    }, [mapx, mapy, options, title]);
+    }, [mapx, mapy, title]);
 
     return (
         <>

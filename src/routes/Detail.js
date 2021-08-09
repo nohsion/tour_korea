@@ -9,6 +9,7 @@ import "./Detail.css"
 
 class Detail extends React.Component {
     state = {
+        isLoading: true,
         infos: [], // 공통 정보
         images: [], // 이미지 정보
         intros: [], // 소개 정보
@@ -68,6 +69,8 @@ class Detail extends React.Component {
 
         const {data: {response: {body}}} = await axios.get(url_detailIntro + queryParams2)
         this.setState({intros: body.items.item})
+
+        this.setState({ isLoading: false })
     }
 
     componentDidMount() {
@@ -80,44 +83,52 @@ class Detail extends React.Component {
     }
 
     render() {
-        const {infos, images, intros, addr, contenttypeid} = this.state
+        const {isLoading, infos, images, intros, addr, contenttypeid} = this.state
         console.log(intros, contenttypeid)
         return (
             <section className="container">
-                <div>
-                    <DetailContent
-                        key={infos.contentid}
-                        contentid={infos.contentid}
-                        contenttypeid={infos.contenttypeid}
-                        firstimage={infos.firstimage}
-                        firstimage2={infos.firstimage2}
-                        homepage={infos.homepage}
-                        overview={infos.overview}
-                        title={infos.title}
-                    />
-                </div>
-                <div className="detail_images">
-                    {images && images.map(content => (
-                        <ShowImages
-                            originimgurl={content.originimgurl}
-                            serialnum={content.serialnum}
-                            smallimageurl={content.smallimageurl}
-                        />
-                    ))}
-                </div>
-                <div>
-                    <DetailIntro
+                {isLoading ? (
+                    <div className="loader">
+                        <span className="loader__text">Loading...</span>
+                    </div>
+                ) : (
+                    <>
+                        <div>
+                            <DetailContent
+                                key={infos.contentid}
+                                contentid={infos.contentid}
+                                contenttypeid={infos.contenttypeid}
+                                firstimage={infos.firstimage}
+                                firstimage2={infos.firstimage2}
+                                homepage={infos.homepage}
+                                overview={infos.overview}
+                                title={infos.title}
+                            />
+                        </div>
+                        <div className="detail_images">
+                            {images && images.map(content => (
+                                <ShowImages
+                                    originimgurl={content.originimgurl}
+                                    serialnum={content.serialnum}
+                                    smallimageurl={content.smallimageurl}
+                                />
+                            ))}
+                        </div>
+                        <div>
+                            <DetailIntro
 
-                    />
-                </div>
-                <div>
-                    <Map
-                        mapx={infos.mapx}
-                        mapy={infos.mapy}
-                        title={infos.title}
-                        addr={addr}
-                    />
-                </div>
+                            />
+                        </div>
+                        <div>
+                            <Map
+                                mapx={infos.mapx}
+                                mapy={infos.mapy}
+                                title={infos.title}
+                                addr={addr}
+                            />
+                        </div>
+                    </>
+                )}
             </section>
         )
     }
