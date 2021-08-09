@@ -3,7 +3,7 @@ import "./DetailContent.css"
 // import PropTypes from "prop-types"
 
 
-function DetailContent({ booktour, contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
+function DetailContent({ contentid, contenttypeid, firstimage, firstimage2, homepage, overview, title }) {
     return (
         <div className="detail_content">
             <div className="detail_content__header">
@@ -16,7 +16,7 @@ function DetailContent({ booktour, contentid, contenttypeid, firstimage, firstim
                 <div className="detail_content__overview" dangerouslySetInnerHTML=
                     { {__html: overview} }>
                 </div>
-                <div className="detail_content__addr" dangerouslySetInnerHTML=
+                <div className="detail_content__homepage" dangerouslySetInnerHTML=
                     { {__html: homepage} }>
                 </div>
             </div>

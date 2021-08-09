@@ -20,6 +20,8 @@ class Home extends React.Component {
     }
 
     getContents = async () => {
+        let numOfRows = '18'
+
         /* 지역 코드 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
         let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
@@ -36,7 +38,7 @@ class Home extends React.Component {
         /* 지역 기반 조회 (관광지) */
         let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
         let queryParams2 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams2 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams2 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(numOfRows)
         queryParams2 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams2 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('12') /* 관광타입: 관광지 */
         queryParams2 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -50,7 +52,7 @@ class Home extends React.Component {
         /* 지역 기반 조회 (식당) */
         let url_searchFood = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
         let queryParams3 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams3 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams3 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(numOfRows)
         queryParams3 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams3 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('39') /* 관광타입: 식당 */
         queryParams3 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -64,7 +66,7 @@ class Home extends React.Component {
         /* 지역 기반 조회 (호텔) */
         let url_searchHotel = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
         let queryParams4 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams4 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams4 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(numOfRows)
         queryParams4 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams4 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('32') /* 관광타입: 호텔 */
         queryParams4 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -78,7 +80,7 @@ class Home extends React.Component {
         /* 지역 기반 조회 (쇼핑) */
         let url_searchShopping = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
         let queryParams5 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams5 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams5 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(numOfRows)
         queryParams5 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams5 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('38') /* 관광타입: 쇼핑 */
         queryParams5 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -92,7 +94,7 @@ class Home extends React.Component {
         /* 지역 기반 조회 (축제) */
         let url_searchFestival = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
         let queryParams6 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams6 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('15')
+        queryParams6 += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(numOfRows)
         queryParams6 += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams6 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent('15') /* 관광타입: 축제 */
         queryParams6 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -116,7 +118,7 @@ class Home extends React.Component {
                 </Space>
                 <div className="tourspot">
                     <h2>관광지</h2>
-                    {contents.map(content => (
+                    {contents && contents.map(content => (
                         <Content
                             key={content.contentid}
                             tel={content.tel}
@@ -133,7 +135,7 @@ class Home extends React.Component {
                 </div>
                 <div className="food">
                     <h2>식당</h2>
-                    {foods.map(content => (
+                    {foods && foods.map(content => (
                         <Content
                             key={content.contentid}
                             tel={content.tel}
@@ -150,7 +152,7 @@ class Home extends React.Component {
                 </div>
                 <div className="hotel">
                     <h2>호텔</h2>
-                    {hotels.map(content => (
+                    {hotels && hotels.map(content => (
                         <Content
                             key={content.contentid}
                             tel={content.tel}
@@ -167,7 +169,7 @@ class Home extends React.Component {
                 </div>
                 <div className="shopping">
                     <h2>쇼핑</h2>
-                    {shoppings.map(content => (
+                    {shoppings && shoppings.map(content => (
                         <Content
                             key={content.contentid}
                             tel={content.tel}
@@ -184,7 +186,7 @@ class Home extends React.Component {
                 </div>
                 <div className="festivals">
                     <h2>축제</h2>
-                    {festivals.map(content => (
+                    {festivals && festivals.map(content => (
                         <Content
                             key={content.contentid}
                             tel={content.tel}

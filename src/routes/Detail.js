@@ -3,21 +3,28 @@ import axios from "axios";
 import DetailContent from "../components/DetailContent";
 import Map from "../components/Map";
 import ShowImages from "../components/ShowImages";
+import DetailIntro from "../components/DetailIntro";
+import "./Detail.css"
 
 
 class Detail extends React.Component {
     state = {
         infos: [], // 공통 정보
-        images: [] // 이미지 정보
+        images: [], // 이미지 정보
+        intros: [], // 소개 정보
+        addr: "", // 주소
+        contenttypeid: "" // ex. 관광지, 음식, 호텔..
     }
 
     getInfos = async () => {
-        const {location: {state: {contentid}}} = this.props
+        const {location: {state}} = this.props
+        this.setState({addr: state.addr1})
+        this.setState({contenttypeid: state.contenttypeid})
 
         /* 공통 정보 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon' /*URL*/
         let queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(contentid)
+        queryParams += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(state.contentid)
         queryParams += '&' + encodeURIComponent('defaultYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('overviewYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('firstImageYN') + '=' + encodeURIComponent('Y')
@@ -33,7 +40,7 @@ class Detail extends React.Component {
         /* 이미지 정보 조회 */
         let url_detailImage = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage' /*URL*/
         let queryParams1 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
-        queryParams1 += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(contentid)
+        queryParams1 += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(state.contentid)
         queryParams1 += '&' + encodeURIComponent('imageYN') + '=' + encodeURIComponent('Y')
         queryParams1 += '&' + encodeURIComponent('subImageYN') + '=' + encodeURIComponent('Y')
         queryParams1 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
@@ -41,18 +48,26 @@ class Detail extends React.Component {
         queryParams1 += '&_type=json'
 
         const {data: {response: {body: {items}}}} = await axios.get(url_detailImage + queryParams1)
-        if (items === "") {
-            console.log("api가 제공하는 이미지가 없습니다")
-            this.setState({
-                images: [
-                    {id: 1},
-                    {id: 2}
-                ]
-            })
-        } else {
+        if (Array.isArray(items.item)) {
             this.setState({images: items.item})
+        } else if (items.item) {
+            this.setState({images: [...this.state.images, items.item]})
+        } else {
+            this.setState({images: [...this.state.images, {id: 1}]})
         }
 
+
+        /* 소개 정보 조회 */
+        let url_detailIntro = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro' /*URL*/
+        let queryParams2 = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
+        queryParams2 += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent(state.contentid)
+        queryParams2 += '&' + encodeURIComponent('contentTypeId') + '=' + encodeURIComponent(state.contenttypeid)
+        queryParams2 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
+        queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
+        queryParams2 += '&_type=json'
+
+        const {data: {response: {body}}} = await axios.get(url_detailIntro + queryParams2)
+        this.setState({intros: body.items.item})
     }
 
     componentDidMount() {
@@ -65,14 +80,13 @@ class Detail extends React.Component {
     }
 
     render() {
-        const {infos, images} = this.state
-        console.log(images)
+        const {infos, images, intros, addr, contenttypeid} = this.state
+        console.log(intros, contenttypeid)
         return (
             <section className="container">
                 <div>
                     <DetailContent
                         key={infos.contentid}
-                        booktour={infos.booktour}
                         contentid={infos.contentid}
                         contenttypeid={infos.contenttypeid}
                         firstimage={infos.firstimage}
@@ -82,8 +96,8 @@ class Detail extends React.Component {
                         title={infos.title}
                     />
                 </div>
-                <div className="showImages">
-                    {images.map(content => (
+                <div className="detail_images">
+                    {images && images.map(content => (
                         <ShowImages
                             originimgurl={content.originimgurl}
                             serialnum={content.serialnum}
@@ -92,10 +106,16 @@ class Detail extends React.Component {
                     ))}
                 </div>
                 <div>
+                    <DetailIntro
+
+                    />
+                </div>
+                <div>
                     <Map
                         mapx={infos.mapx}
                         mapy={infos.mapy}
                         title={infos.title}
+                        addr={addr}
                     />
                 </div>
             </section>

@@ -1,12 +1,12 @@
 import React from "react";
+import "./ShowImages.css"
 
 
 function ShowImages({originimgurl, serialnum, smallimageurl}) {
     return (
-        <img
-            className="d-block w-100"
-            src={originimgurl}
-        />
+        <div className="image_content">
+            <img src={originimgurl} alt="hi" title="hi" />
+        </div>
     )
 }
 

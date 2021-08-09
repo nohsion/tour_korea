@@ -2,7 +2,16 @@
     left: 50%;
     margin-top: 20px;
     margin-left: -250px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+}
+
+.map_addr {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.map_addr h5 {
+    font-size: inherit;
 }
 
 .info-title {
