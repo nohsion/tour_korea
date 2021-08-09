@@ -54,7 +54,11 @@ class Detail extends React.Component {
         } else if (items.item) {
             this.setState({images: [...this.state.images, items.item]})
         } else {
-            this.setState({images: [...this.state.images, {id: 1}]})
+            this.setState({images: [...this.state.images,
+                    {
+                        id: 1,
+                        originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
+                    }]})
         }
 
 
@@ -86,7 +90,7 @@ class Detail extends React.Component {
         const {isLoading, infos, images, intros, addr, contenttypeid} = this.state
         console.log(intros, contenttypeid)
         return (
-            <section className="container">
+            <section className="detail_container">
                 {isLoading ? (
                     <div className="loader">
                         <span className="loader__text">Loading...</span>
