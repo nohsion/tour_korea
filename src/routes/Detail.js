@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
-import DetailContent from "../components/DetailContent";
-import Map from "../components/Map";
-import ShowImages from "../components/ShowImages";
-import DetailIntro from "../components/DetailIntro";
+import DetailContent from "../components/Detail/DetailContent";
+import Map from "../components/Detail/Map";
+import ShowImages from "../components/Detail/ShowImages";
+import DetailIntro from "../components/Detail/DetailIntro";
 import "./Detail.css"
 
 
@@ -120,7 +120,39 @@ class Detail extends React.Component {
                         </div>
                         <div>
                             <DetailIntro
+                                infocenter={intros.infocenter}
+                                expguide={intros.expguide}
+                                usetimefesitival={intros.usetimefestival}
+                                parking={intros.parking}
+                                accomcount={intros.accomcount}
+                                restdate={intros.restdate}
+                                usetime={intros.usetime}
 
+                                firstmenu={intros.firstmenu}
+                                infocenterfood={intros.infocenterfood}
+                                opentimefood={intros.opentimefood}
+                                parkingfood={intros.parkingfood}
+                                reservationfood={intros.reservationfood}
+                                restdatefood={intros.restdatefood}
+                                treatmenu={intros.treatmenu}
+
+                                checkintime={intros.checkintime}
+                                checkouttime={intros.checkouttime}
+                                parkinglodging={intros.parkinglodging}
+                                refundregulation={intros.refundregulation}
+                                reservationurl={intros.reservationurl}
+                                foodplace={intros.foodplace}
+                                subfacility={intros.subfacility}
+                                roomtype={intros.roomtype}
+
+                                opentime={intros.opentime}
+                                parkingshopping={intros.parkingshopping}
+                                saleitem={intros.saleitem}
+                                shopguide={intros.shopguide}
+
+                                agelimit={intros.agelimit}
+                                eventplace={intros.eventplace}
+                                usetimefestival={intros.usetimefestival}
                             />
                         </div>
                         <div>

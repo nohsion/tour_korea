@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import Content from "../components/Content";
+import Content from "../components/Home/Content";
 import {Input, Space} from 'antd';
 import "./Home.css"
 
