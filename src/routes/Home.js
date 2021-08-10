@@ -1,13 +1,9 @@
 import React from 'react';
 import axios from "axios";
 import Content from "../components/Home/Content";
-import {Input, Space} from 'antd';
+import CitySelect from "../components/Home/CitySelect";
 import "./Home.css"
 
-const {Search} = Input;
-const onSearch = value => {
-    console.log(value);
-}
 
 class Home extends React.Component {
     state = {
@@ -113,7 +109,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {isLoading, contents, foods, hotels, shoppings, festivals} = this.state
+        const {isLoading, locations, contents, foods, hotels, shoppings, festivals} = this.state
         return (
             <section className="container">
                 {isLoading ? (
@@ -122,9 +118,9 @@ class Home extends React.Component {
                     </div>
                 ) : (
                     <>
-                        <Space direction="vertical">
-                            <Search placeholder="Input Search Keyword" onSearch={onSearch} enterButton/>
-                        </Space>
+                        <CitySelect
+                            locations={locations}
+                        />
                         <div className="tourspot">
                             <h2>관광지</h2>
                             {contents && contents.map(content => (

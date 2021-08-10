@@ -4,6 +4,7 @@ import DetailContent from "../components/Detail/DetailContent";
 import Map from "../components/Detail/Map";
 import ShowImages from "../components/Detail/ShowImages";
 import DetailIntro from "../components/Detail/DetailIntro";
+import ClearIcon from '@material-ui/icons/Clear';
 import "./Detail.css"
 
 
@@ -60,7 +61,7 @@ class Detail extends React.Component {
                         originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
                     }]})
         }
-        this.setState({images: items.item})
+        // this.setState({images: items.item})
 
         /* 소개 정보 조회 */
         let url_detailIntro = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro' /*URL*/
