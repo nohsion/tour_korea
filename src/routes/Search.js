@@ -44,9 +44,11 @@ class Search extends React.Component {
         const {data: {response: {body: {items: { item }}}}} = await axios.get(url_searchKeyword + queryParams)
         this.setState({contents: item})
         if (!Array.isArray(item) && item) {
-            this.setState({contents: [...item]})
+            let new_contents = []
+            new_contents.push(item)
+            this.setState({contents: [...new_contents]})
         }
-
+        console.log(item)
         this.setState({isLoading: false})
     }
 
@@ -60,7 +62,7 @@ class Search extends React.Component {
 
     render() {
         const {isLoading, city, keyword, contents} = this.state
-        console.log(city, keyword)
+        console.log(city, keyword, contents)
         return (
             <section className="container">
                 {isLoading ? (
