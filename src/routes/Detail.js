@@ -4,6 +4,7 @@ import DetailContent from "../components/Detail/DetailContent";
 import Map from "../components/Detail/Map";
 import ShowImages from "../components/Detail/ShowImages";
 import DetailIntro from "../components/Detail/DetailIntro";
+import ClearIcon from '@material-ui/icons/Clear';
 import "./Detail.css"
 
 
@@ -49,17 +50,6 @@ class Detail extends React.Component {
         queryParams1 += '&_type=json'
 
         const {data: {response: {body: {items}}}} = await axios.get(url_detailImage + queryParams1)
-        if (Array.isArray(items.item)) {
-            this.setState({images: items.item})
-        } else if (items.item) {
-            this.setState({images: [...this.state.images, items.item]})
-        } else {
-            this.setState({images: [...this.state.images,
-                    {
-                        id: 1,
-                        originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
-                    }]})
-        }
         this.setState({images: items.item})
 
         /* 소개 정보 조회 */
