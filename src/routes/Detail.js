@@ -4,7 +4,6 @@ import DetailContent from "../components/Detail/DetailContent";
 import Map from "../components/Detail/Map";
 import ShowImages from "../components/Detail/ShowImages";
 import DetailIntro from "../components/Detail/DetailIntro";
-import ClearIcon from '@material-ui/icons/Clear';
 import "./Detail.css"
 
 
