@@ -13,7 +13,7 @@ function DetailIntro({ contenttypeid,
     if (contenttypeid === 12) {
         return (
             <div className="detail_intro__data">
-                <h4>상세정보</h4>
+                <h4>상세정보</h4><br/>
                 <div>{infocenter}</div>
                 <div>{usetimefesitival}</div>
                 <div dangerouslySetInnerHTML={ {__html: expguide} }></div>

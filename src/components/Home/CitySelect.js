@@ -59,6 +59,7 @@ function CitySelect({locations}) {
     }, [keyword])
 
     const onSelectCity = (event, type) => {
+        console.log(event.target)
         setCity(event.target.value);
         setSelectCity(type.props.children)
     };
@@ -91,7 +92,7 @@ function CitySelect({locations}) {
                     onChange={onSelectCity}
                     input={<BootstrapInput/>}
                 >
-                    <MenuItem value="전국">
+                    <MenuItem value={0}>
                         <strong>전국</strong>
                     </MenuItem>
                     {locations.map(item => (
@@ -107,6 +108,7 @@ function CitySelect({locations}) {
             </FormControl>
             <FormControl className={classes.margin}>
                 <Link
+                    style={{textDecoration: 'none'}}
                     to={{
                         pathname: `/keyword/${keyword}`,
                         state: {
