@@ -60,7 +60,7 @@ class Detail extends React.Component {
                         originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
                     }]})
         }
-
+        this.setState({images: items.item})
 
         /* 소개 정보 조회 */
         let url_detailIntro = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro' /*URL*/
@@ -110,16 +110,13 @@ class Detail extends React.Component {
                             />
                         </div>
                         <div className="detail_images">
-                            {images && images.map(content => (
-                                <ShowImages
-                                    originimgurl={content.originimgurl}
-                                    serialnum={content.serialnum}
-                                    smallimageurl={content.smallimageurl}
-                                />
-                            ))}
+                            <ShowImages
+                                images={images}
+                            />
                         </div>
                         <div>
                             <DetailIntro
+                                contenttypeid={infos.contenttypeid}
                                 infocenter={intros.infocenter}
                                 expguide={intros.expguide}
                                 usetimefesitival={intros.usetimefestival}
