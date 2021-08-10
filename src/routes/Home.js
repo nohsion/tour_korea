@@ -28,9 +28,10 @@ class Home extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
-        this.setState({locations: item})
-
+        // const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
+        // this.setState({locations: item})
+        const aaaa = await axios.get(url_areaCode + queryParams)
+        console.log(aaaa)
 
         /* 지역 기반 조회 (관광지) */
         let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
@@ -55,6 +56,7 @@ class Home extends React.Component {
         queryParams3 += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
         queryParams3 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams3 += '&_type=json'
+
 
         const {data: {response: {body}}} = await axios.get(url_searchFood + queryParams3)
         this.setState({foods: body.items.item})
