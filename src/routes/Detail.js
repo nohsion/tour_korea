@@ -50,18 +50,7 @@ class Detail extends React.Component {
         queryParams1 += '&_type=json'
 
         const {data: {response: {body: {items}}}} = await axios.get(url_detailImage + queryParams1)
-        if (Array.isArray(items.item)) {
-            this.setState({images: items.item})
-        } else if (items.item) {
-            this.setState({images: [...this.state.images, items.item]})
-        } else {
-            this.setState({images: [...this.state.images,
-                    {
-                        id: 1,
-                        originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
-                    }]})
-        }
-        // this.setState({images: items.item})
+        this.setState({images: items.item})
 
         /* 소개 정보 조회 */
         let url_detailIntro = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro' /*URL*/

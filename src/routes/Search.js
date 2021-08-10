@@ -29,9 +29,12 @@ class Search extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams)
-        console.log(items)
-        this.setState({contents: items.item})
+        const {data: {response: {body: {items: { item }}}}} = await axios.get(url_searchKeyword + queryParams)
+        console.log(item)
+        this.setState({contents: item})
+        if (!Array.isArray(item) && item) {
+            this.setState({contents: [...item]})
+        }
     }
 
     componentDidMount() {
