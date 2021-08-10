@@ -77,7 +77,7 @@ class Detail extends React.Component {
 
     render() {
         const {isLoading, infos, images, intros, addr, contenttypeid} = this.state
-        console.log(intros, contenttypeid)
+        // console.log(intros, contenttypeid)
         return (
             <section className="detail_container">
                 {isLoading ? (

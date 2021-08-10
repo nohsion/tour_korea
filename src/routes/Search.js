@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from "axios";
 import Content from "../components/Home/Content";
+import "./Home.css"
 
 
 class Search extends React.Component {
     state = {
         isLoading: true,
-        city: "",
+        cityname: "",
         keyword: "",
         areaCode: "",
         contents: []
@@ -14,9 +15,10 @@ class Search extends React.Component {
 
     getInfos = async () => {
         const {location: {state}} = this.props
-        this.setState({city: state.selectCity})
+        this.setState({cityname: state.selectcity})
         this.setState({keyword: state.keyword})
         this.setState({areaCode: state.city})
+
 
         /* 지역 코드 조회 */
         let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchKeyword' /*URL*/
@@ -44,11 +46,11 @@ class Search extends React.Component {
         const {data: {response: {body: {items: { item }}}}} = await axios.get(url_searchKeyword + queryParams)
         this.setState({contents: item})
         if (!Array.isArray(item) && item) {
+            console.log("data는 있는데 배열은 아니네요")
             let new_contents = []
             new_contents.push(item)
             this.setState({contents: [...new_contents]})
         }
-        console.log(item)
         this.setState({isLoading: false})
     }
 
@@ -61,8 +63,8 @@ class Search extends React.Component {
     }
 
     render() {
-        const {isLoading, city, keyword, contents} = this.state
-        console.log(city, keyword, contents)
+        const {isLoading, cityname, keyword, areaCode, contents} = this.state
+        console.log(cityname, keyword, areaCode)
         return (
             <section className="container">
                 {isLoading ? (
@@ -71,7 +73,7 @@ class Search extends React.Component {
                     </div>
                 ) : (
                     <>
-                        <h2>{city}: <strong>{keyword}</strong>에 관한 검색결과입니다</h2>
+                        <h2>{cityname}: <strong>{keyword}</strong>에 관한 검색결과입니다</h2>
                         {contents && contents.map(content => (
                             <Content
                                 key={content.contentid}
