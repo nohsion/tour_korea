@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ShowImages({images}) {
     const classes = useStyles();
-    console.log(images)
+    // console.log(images)
 
     if (Array.isArray(images)) {
         console.log("images 배열입니다")

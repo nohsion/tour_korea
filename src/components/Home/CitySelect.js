@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Button, InputLabel, MenuItem, FormControl, Select, InputBase} from '@material-ui/core';
 import {Link} from "react-router-dom"
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 function CitySelect({locations}) {
     const classes = useStyles()
     const [city, setCity] = useState('')
-    const [selectCity, setSelectCity] = useState('')
+    const [selectcity, setselectcity] = useState('')
     const [keyword, setKeyword] = useState('')
 
     useEffect(() => {
@@ -58,10 +58,10 @@ function CitySelect({locations}) {
         }
     }, [keyword])
 
-    const onSelectCity = (event, type) => {
+    const onselectcity = (event, type) => {
         console.log(event.target)
         setCity(event.target.value);
-        setSelectCity(type.props.children)
+        setselectcity(type.props.children)
     };
     const handleKeyPress = e => {
         console.log(e.key)
@@ -70,14 +70,14 @@ function CitySelect({locations}) {
         setKeyword(e.target.value)
     }
     const getData = async () => {
-        if (!selectCity) {
+        if (!selectcity) {
             alert('도시를 선택해주세요')
             window.location.replace("/")
         } else if (!keyword) {
             alert('키워드를 입력해주세요')
             window.location.replace("/")
         } else {
-            console.log(selectCity, keyword)
+            console.log(selectcity, keyword)
         }
     }
 
@@ -89,7 +89,7 @@ function CitySelect({locations}) {
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
                     value={city}
-                    onChange={onSelectCity}
+                    onChange={onselectcity}
                     input={<BootstrapInput/>}
                 >
                     <MenuItem value={0}>
@@ -112,13 +112,13 @@ function CitySelect({locations}) {
                     to={{
                         pathname: `/keyword/${keyword}`,
                         state: {
-                            selectCity, keyword, city
+                            selectcity, keyword, city
                         }
                     }
                     }>
                     <Button
                         style={{marginTop: 26}}
-                        selectCity={selectCity}
+                        selectcity={selectcity}
                         keyword={keyword}
                         onClick={getData}
                     >

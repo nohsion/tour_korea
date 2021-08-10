@@ -17,7 +17,7 @@ class Home extends React.Component {
     }
 
     getContents = async () => {
-        let numOfRows = '18'
+        const numOfRows = '18'
 
         /* 지역 코드 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
@@ -44,7 +44,7 @@ class Home extends React.Component {
 
         const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams2)
         this.setState({contents: items.item})
-
+        
 
         /* 지역 기반 조회 (식당) */
         let url_searchFood = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
