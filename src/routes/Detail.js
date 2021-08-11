@@ -85,7 +85,7 @@ class Detail extends React.Component {
                         <span className="loader__text">Loading...</span>
                     </div>
                 ) : (
-                    <>
+                    <>  
                         <div>
                             <DetailContent
                                 key={infos.contentid}

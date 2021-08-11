@@ -26,7 +26,7 @@ class Search extends React.Component {
         queryParams += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent(state.keyword)
         queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y')
         queryParams += '&' + encodeURIComponent('areaCode') + '=' + encodeURIComponent(state.city)
-        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('18')
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('9999')
         queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
         queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
@@ -36,7 +36,7 @@ class Search extends React.Component {
             queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + process.env.REACT_APP_API_KEY /* Service Key */
             queryParams += '&' + encodeURIComponent('keyword') + '=' + encodeURIComponent(state.keyword)
             queryParams += '&' + encodeURIComponent('listYN') + '=' + encodeURIComponent('Y')
-            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('18')
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('9999')
             queryParams += '&' + encodeURIComponent('arrange') + '=' + encodeURIComponent('P') /* 대표이미지가 반드시 있는 조회순 정렬 */
             queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('ETC')
             queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
@@ -49,6 +49,11 @@ class Search extends React.Component {
             console.log("data는 있는데 배열은 아니네요")
             let new_contents = []
             new_contents.push(item)
+            this.setState({contents: [...new_contents]})
+        }
+        if (!item) {
+            console.log('data가 없습니다')
+            let new_contents = []
             this.setState({contents: [...new_contents]})
         }
         this.setState({isLoading: false})
@@ -73,7 +78,7 @@ class Search extends React.Component {
                     </div>
                 ) : (
                     <>
-                        <h2>{cityname}: <strong>{keyword}</strong>에 관한 검색결과입니다</h2>
+                        <h2>{cityname}: <strong>{keyword}</strong>에 관한 검색결과입니다. (총 {contents.length}개)</h2>
                         {contents && contents.map(content => (
                             <Content
                                 key={content.contentid}
