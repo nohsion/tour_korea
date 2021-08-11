@@ -23,6 +23,7 @@
 .content__data {
     background-color: white;
     padding: 15px;
+    text-align: left;
 }
 
 .content__title {
