@@ -13,6 +13,11 @@ a {
     width: 100%;
 }
 
+.fas.fa-plane {
+    padding-right: 7px;
+    padding-left: 2px;
+}
+
 .navbar__logo {
     font-size: 20px;
 }
