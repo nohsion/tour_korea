@@ -1,0 +1,83 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aliceblue;
+    padding: 10px 12px;
+    position: fixed;
+    width: 100%;
+}
+
+.navbar__logo {
+    font-size: 20px;
+}
+
+.navbar__logo i {
+    font-size: 24px;
+    color: black;
+}
+
+.navbar__menu {
+    display: flex;
+    list-style: none;
+    padding-right: 50px;
+}
+
+.navbar__menu li {
+    padding: 7px 5px;
+}
+
+.MuiButton-label {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.navbar__toggleBtn {
+    display: none;
+    position: absolute;
+    right: 35px;
+    font-size: 20px;
+    background-color: rgb(208, 231, 238);
+    padding: 0px 3px 3px 3px;
+}
+
+.navbar__toggleBtn:hover {
+    background-color: whitesmoke;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 23px 12px;
+        background-color: rgb(208, 231, 238);
+    }
+
+    .navbar__menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .MuiButton-label {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .navbar__toggleBtn {
+        display: block;
+    }
+
+    .navbar__menu.active {
+        display: flex;
+    }
+
+    
+}
