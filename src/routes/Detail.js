@@ -6,7 +6,6 @@ import ShowImages from "../components/Detail/ShowImages";
 import DetailIntro from "../components/Detail/DetailIntro";
 import Youtube from "../components/Detail/Youtube";
 import "./Detail.css"
-import Content from "../components/Home/Content";
 
 
 class Detail extends React.Component {
@@ -89,7 +88,7 @@ class Detail extends React.Component {
     }
 
     render() {
-        const {isLoading, infos, images, intros, addr, contenttypeid, youtube} = this.state
+        const {isLoading, infos, images, intros, addr, youtube} = this.state
         // console.log(youtube)
         return (
             <section className="detail_container">

@@ -34,7 +34,7 @@ function Map({mapx, mapy, title, addr}) {
         });
         return () => {
         };
-    }, [mapx, mapy, title]);
+    }, [mapx, mapy, title, options]);
 
     return (
         <>
