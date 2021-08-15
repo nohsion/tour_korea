@@ -4,6 +4,7 @@ import DetailContent from "../components/Detail/DetailContent";
 import Map from "../components/Detail/Map";
 import ShowImages from "../components/Detail/ShowImages";
 import DetailIntro from "../components/Detail/DetailIntro";
+import Youtube from "../components/Detail/Youtube";
 import "./Detail.css"
 
 
@@ -14,7 +15,8 @@ class Detail extends React.Component {
         images: [], // 이미지 정보
         intros: [], // 소개 정보
         addr: "", // 주소
-        contenttypeid: "" // ex. 관광지, 음식, 호텔..
+        contenttypeid: "", // ex. 관광지, 음식, 호텔..
+        youtube: {}
     }
 
     getInfos = async () => {
@@ -49,17 +51,6 @@ class Detail extends React.Component {
         queryParams1 += '&_type=json'
 
         const {data: {response: {body: {items}}}} = await axios.get(url_detailImage + queryParams1)
-        if (Array.isArray(items.item)) {
-            this.setState({images: items.item})
-        } else if (items.item) {
-            this.setState({images: [...this.state.images, items.item]})
-        } else {
-            this.setState({images: [...this.state.images,
-                    {
-                        id: 1,
-                        originimgurl: "https://static.thenounproject.com/png/1439134-200.png"
-                    }]})
-        }
         this.setState({images: items.item})
 
         /* 소개 정보 조회 */
@@ -74,7 +65,17 @@ class Detail extends React.Component {
         const {data: {response: {body}}} = await axios.get(url_detailIntro + queryParams2)
         this.setState({intros: body.items.item})
 
-        this.setState({ isLoading: false })
+
+        /* 유튜브 관련 영상 조회 */
+        let url_youtube = 'https://www.googleapis.com/youtube/v3/search'
+        let queryParams7 = '?' + encodeURIComponent('key') + '=' + process.env.REACT_APP_YOUTUBE_KEY
+        queryParams7 += '&' + encodeURIComponent('part') + '=' + encodeURIComponent('snippet')
+        queryParams7 += '&' + encodeURIComponent('q') + '=' + encodeURIComponent(state.title)
+
+        const data_youtube = await axios.get(url_youtube + queryParams7)
+        this.setState({youtube: data_youtube.data.items})
+
+        this.setState({isLoading: false})
     }
 
     componentDidMount() {
@@ -87,8 +88,8 @@ class Detail extends React.Component {
     }
 
     render() {
-        const {isLoading, infos, images, intros, addr, contenttypeid} = this.state
-        console.log(intros, contenttypeid)
+        const {isLoading, infos, images, intros, addr, youtube} = this.state
+        // console.log(youtube)
         return (
             <section className="detail_container">
                 {isLoading ? (
@@ -151,6 +152,14 @@ class Detail extends React.Component {
                                 eventplace={intros.eventplace}
                                 usetimefestival={intros.usetimefestival}
                             />
+                        </div>
+                        <div className="detail_youtubes">
+                            <br/><h3>관련 유튜브 영상</h3><br/>
+                            {youtube && youtube.map(item => (
+                                <Youtube
+                                    id={item.id.videoId}
+                                />
+                            ))}
                         </div>
                         <div>
                             <Map

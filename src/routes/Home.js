@@ -1,13 +1,10 @@
 import React from 'react';
 import axios from "axios";
 import Content from "../components/Home/Content";
-import {Input, Space} from 'antd';
+import CitySelect from "../components/Home/CitySelect";
+import Navbar from '../components/Home/Navbar';
 import "./Home.css"
 
-const {Search} = Input;
-const onSearch = value => {
-    console.log(value);
-}
 
 class Home extends React.Component {
     state = {
@@ -21,7 +18,7 @@ class Home extends React.Component {
     }
 
     getContents = async () => {
-        let numOfRows = '18'
+        const numOfRows = '18'
 
         /* 지역 코드 조회 */
         let url_areaCode = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode' /*URL*/
@@ -32,8 +29,8 @@ class Home extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
-        const {data: {response: {body: {items: {item}}}}} = await axios.get(url_areaCode + queryParams)
-        this.setState({locations: item})
+        const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
+        this.setState({ locations: item })
 
 
         /* 지역 기반 조회 (관광지) */
@@ -46,8 +43,8 @@ class Home extends React.Component {
         queryParams2 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams2 += '&_type=json'
 
-        const {data: {response: {body: {items}}}} = await axios.get(url_searchKeyword + queryParams2)
-        this.setState({contents: items.item})
+        const { data: { response: { body: { items } } } } = await axios.get(url_searchKeyword + queryParams2)
+        this.setState({ contents: items.item })
 
 
         /* 지역 기반 조회 (식당) */
@@ -60,8 +57,9 @@ class Home extends React.Component {
         queryParams3 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams3 += '&_type=json'
 
-        const {data: {response: {body}}} = await axios.get(url_searchFood + queryParams3)
-        this.setState({foods: body.items.item})
+
+        const { data: { response: { body } } } = await axios.get(url_searchFood + queryParams3)
+        this.setState({ foods: body.items.item })
 
 
         /* 지역 기반 조회 (호텔) */
@@ -74,8 +72,8 @@ class Home extends React.Component {
         queryParams4 += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams4 += '&_type=json'
 
-        const {data: {response}} = await axios.get(url_searchHotel + queryParams4)
-        this.setState({hotels: response.body.items.item})
+        const { data: { response } } = await axios.get(url_searchHotel + queryParams4)
+        this.setState({ hotels: response.body.items.item })
 
 
         /* 지역 기반 조회 (쇼핑) */
@@ -89,7 +87,7 @@ class Home extends React.Component {
         queryParams5 += '&_type=json'
 
         const data = await axios.get(url_searchShopping + queryParams5)
-        this.setState({shoppings: data.data.response.body.items.item})
+        this.setState({ shoppings: data.data.response.body.items.item })
 
 
         /* 지역 기반 조회 (축제) */
@@ -103,9 +101,9 @@ class Home extends React.Component {
         queryParams6 += '&_type=json'
 
         const festival = await axios.get(url_searchFestival + queryParams6)
-        this.setState({festivals: festival.data.response.body.items.item})
+        this.setState({ festivals: festival.data.response.body.items.item })
 
-        this.setState({isLoading: false})
+        this.setState({ isLoading: false })
     }
 
     componentDidMount() {
@@ -113,7 +111,7 @@ class Home extends React.Component {
     }
 
     render() {
-        const {isLoading, contents, foods, hotels, shoppings, festivals} = this.state
+        const { isLoading, locations, contents, foods, hotels, shoppings, festivals } = this.state
         return (
             <section className="container">
                 {isLoading ? (
@@ -122,94 +120,102 @@ class Home extends React.Component {
                     </div>
                 ) : (
                     <>
-                        <Space direction="vertical">
-                            <Search placeholder="Input Search Keyword" onSearch={onSearch} enterButton/>
-                        </Space>
-                        <div className="tourspot">
-                            <h2>관광지</h2>
-                            {contents && contents.map(content => (
-                                <Content
-                                    key={content.contentid}
-                                    tel={content.tel}
-                                    firstimage={content.firstimage}
-                                    firstimage2={content.firstimage2}
-                                    mapx={content.mapx}
-                                    contentid={content.contentid}
-                                    contenttypeid={content.contenttypeid}
-                                    title={content.title}
-                                    addr1={content.addr1}
-                                    mapy={content.mapy}
-                                />
-                            ))}
+                        <div className="header">
+                            <div className="nav_bar">
+                                <Navbar />
+                            </div>
                         </div>
-                        <div className="food">
-                            <h2>식당</h2>
-                            {foods && foods.map(content => (
-                                <Content
-                                    key={content.contentid}
-                                    tel={content.tel}
-                                    firstimage={content.firstimage}
-                                    firstimage2={content.firstimage2}
-                                    mapx={content.mapx}
-                                    contentid={content.contentid}
-                                    contenttypeid={content.contenttypeid}
-                                    title={content.title}
-                                    addr1={content.addr1}
-                                    mapy={content.mapy}
-                                />
-                            ))}
+                        <div className="body">
+                            <CitySelect
+                                locations={locations}
+                            />
+                            <div className="tourspot">
+                                <h2 ref="travel">관광지</h2>
+                                {contents && contents.map(content => (
+                                    <Content
+                                        key={content.contentid}
+                                        tel={content.tel}
+                                        firstimage={content.firstimage}
+                                        firstimage2={content.firstimage2}
+                                        mapx={content.mapx}
+                                        contentid={content.contentid}
+                                        contenttypeid={content.contenttypeid}
+                                        title={content.title}
+                                        addr1={content.addr1}
+                                        mapy={content.mapy}
+                                    />
+                                ))}
+                            </div>
+                            <div className="food">
+                                <h2>식당</h2>
+                                {foods && foods.map(content => (
+                                    <Content
+                                        key={content.contentid}
+                                        tel={content.tel}
+                                        firstimage={content.firstimage}
+                                        firstimage2={content.firstimage2}
+                                        mapx={content.mapx}
+                                        contentid={content.contentid}
+                                        contenttypeid={content.contenttypeid}
+                                        title={content.title}
+                                        addr1={content.addr1}
+                                        mapy={content.mapy}
+                                    />
+                                ))}
+                            </div>
+                            <div className="hotel">
+                                <h2>호텔</h2>
+                                {hotels && hotels.map(content => (
+                                    <Content
+                                        key={content.contentid}
+                                        tel={content.tel}
+                                        firstimage={content.firstimage}
+                                        firstimage2={content.firstimage2}
+                                        mapx={content.mapx}
+                                        contentid={content.contentid}
+                                        contenttypeid={content.contenttypeid}
+                                        title={content.title}
+                                        addr1={content.addr1}
+                                        mapy={content.mapy}
+                                    />
+                                ))}
+                            </div>
+                            <div className="shopping">
+                                <h2>쇼핑</h2>
+                                {shoppings && shoppings.map(content => (
+                                    <Content
+                                        key={content.contentid}
+                                        tel={content.tel}
+                                        firstimage={content.firstimage}
+                                        firstimage2={content.firstimage2}
+                                        mapx={content.mapx}
+                                        contentid={content.contentid}
+                                        contenttypeid={content.contenttypeid}
+                                        title={content.title}
+                                        addr1={content.addr1}
+                                        mapy={content.mapy}
+                                    />
+                                ))}
+                            </div>
+                            <div className="festivals">
+                                <h2>축제</h2>
+                                {festivals && festivals.map(content => (
+                                    <Content
+                                        key={content.contentid}
+                                        tel={content.tel}
+                                        firstimage={content.firstimage}
+                                        firstimage2={content.firstimage2}
+                                        mapx={content.mapx}
+                                        contentid={content.contentid}
+                                        contenttypeid={content.contenttypeid}
+                                        title={content.title}
+                                        addr1={content.addr1}
+                                        mapy={content.mapy}
+                                    />
+                                ))}
+                            </div>
                         </div>
-                        <div className="hotel">
-                            <h2>호텔</h2>
-                            {hotels && hotels.map(content => (
-                                <Content
-                                    key={content.contentid}
-                                    tel={content.tel}
-                                    firstimage={content.firstimage}
-                                    firstimage2={content.firstimage2}
-                                    mapx={content.mapx}
-                                    contentid={content.contentid}
-                                    contenttypeid={content.contenttypeid}
-                                    title={content.title}
-                                    addr1={content.addr1}
-                                    mapy={content.mapy}
-                                />
-                            ))}
-                        </div>
-                        <div className="shopping">
-                            <h2>쇼핑</h2>
-                            {shoppings && shoppings.map(content => (
-                                <Content
-                                    key={content.contentid}
-                                    tel={content.tel}
-                                    firstimage={content.firstimage}
-                                    firstimage2={content.firstimage2}
-                                    mapx={content.mapx}
-                                    contentid={content.contentid}
-                                    contenttypeid={content.contenttypeid}
-                                    title={content.title}
-                                    addr1={content.addr1}
-                                    mapy={content.mapy}
-                                />
-                            ))}
-                        </div>
-                        <div className="festivals">
-                            <h2>축제</h2>
-                            {festivals && festivals.map(content => (
-                                <Content
-                                    key={content.contentid}
-                                    tel={content.tel}
-                                    firstimage={content.firstimage}
-                                    firstimage2={content.firstimage2}
-                                    mapx={content.mapx}
-                                    contentid={content.contentid}
-                                    contenttypeid={content.contenttypeid}
-                                    title={content.title}
-                                    addr1={content.addr1}
-                                    mapy={content.mapy}
-                                />
-                            ))}
-                        </div>
+
                     </>
                 )}
 
