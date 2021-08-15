@@ -32,6 +32,9 @@ class Home extends React.Component {
         const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
         this.setState({ locations: item })
 
+        const aaaa = await axios.get(url_areaCode + queryParams)
+        console.log(aaaa)
+
 
         /* 지역 기반 조회 (관광지) */
         let url_searchKeyword = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList'
