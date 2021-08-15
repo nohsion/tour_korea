@@ -29,11 +29,13 @@ class Home extends React.Component {
         queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('AppTest')
         queryParams += '&_type=json'
 
+        let aaaa = await axios.get(url_areaCode + queryParams)
+        console.log(aaaa)
+
         const { data: { response: { body: { items: { item } } } } } = await axios.get(url_areaCode + queryParams)
         this.setState({ locations: item })
 
-        const aaaa = await axios.get(url_areaCode + queryParams)
-        console.log(aaaa)
+
 
 
         /* 지역 기반 조회 (관광지) */
